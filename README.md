@@ -10,6 +10,14 @@ board so persistent agents know what to read, claim, update, and report back to.
 
 ![User experience flow for Grok agents memory](assets/user-experience-v2.svg)
 
+## What This Is
+
+This is a Grok CLI project template that gives spawned agents a real local
+operating layer: persistent SQLite memory for long-term facts, plus a SQLite job
+board for current work. New projects start with a short interview, then agents
+claim jobs, report progress, complete or block work, and write durable memory
+through MCP tools.
+
 ## What Is Real Here
 
 - MCP server: `mcp/sqlite_memory_server.py`
@@ -57,7 +65,7 @@ You can also invoke the kickoff workflow directly inside Grok:
 /project-kickoff
 ```
 
-Or use the launcher that supplies the opening prompt for you:
+Or use the launcher that runs preflight and opens Grok for you:
 
 ```powershell
 .\scripts\start_project.ps1
