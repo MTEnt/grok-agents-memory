@@ -1,131 +1,291 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="880" viewBox="0 0 1280 880" role="img" aria-labelledby="title desc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
   <title id="title">Grok agents memory and job board flow</title>
-  <desc id="desc">A flow diagram showing a user launching Grok, completing a kickoff interview, saving a project brief to SQLite, creating jobs, and agents using context packs, job claims, reports, completion, and durable memory.</desc>
+  <desc id="desc">Architecture diagram. A user runs the launcher, Grok loads project-founder and runs a six-question interview, the brief and initial jobs are persisted to SQLite through an MCP server, and named specialist agents execute a five-step work loop against the same database.</desc>
+
   <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
-      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1224"/>
+      <stop offset="1" stop-color="#0a0f1f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8b5cf6"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141c33"/>
+      <stop offset="1" stop-color="#0f1629"/>
+    </linearGradient>
+    <linearGradient id="db" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e293b"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="hub" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#14b8a6" stop-opacity="0.25"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,5 L0,10 Z" fill="#8aa0c7"/>
+    </marker>
+    <marker id="arrA" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,5 L0,10 Z" fill="#22d3ee"/>
     </marker>
     <style>
-      .bg { fill: #f8fafc; }
-      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
-      .subtitle { font: 16px Arial, sans-serif; fill: #475569; }
-      .section-label { font: 700 13px Arial, sans-serif; letter-spacing: 1px; fill: #475569; }
-      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
-      .box-blue { fill: #eff6ff; stroke: #60a5fa; stroke-width: 2; rx: 8; }
-      .box-green { fill: #ecfdf5; stroke: #34d399; stroke-width: 2; rx: 8; }
-      .box-amber { fill: #fffbeb; stroke: #f59e0b; stroke-width: 2; rx: 8; }
-      .box-rose { fill: #fff1f2; stroke: #fb7185; stroke-width: 2; rx: 8; }
-      .box-violet { fill: #f5f3ff; stroke: #8b5cf6; stroke-width: 2; rx: 8; }
-      .box-gray { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 2; rx: 8; }
-      .db { fill: #ffffff; stroke: #0f766e; stroke-width: 2; }
-      .db-fill { fill: #ccfbf1; stroke: #0f766e; stroke-width: 2; }
-      .node-title { font: 700 17px Arial, sans-serif; fill: #0f172a; }
-      .node-text { font: 13px Arial, sans-serif; fill: #334155; }
-      .tiny { font: 12px Arial, sans-serif; fill: #475569; }
-      .code { font: 700 12px Consolas, monospace; fill: #1e293b; }
-      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
-      .arrow-soft { stroke: #64748b; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 5; }
-      .rail { fill: none; stroke: #e2e8f0; stroke-width: 2; }
+      .h1 { font-size: 30px; font-weight: 700; fill: #f8fafc; letter-spacing: -0.4px; }
+      .h2 { font-size: 14px; fill: #94a3b8; }
+      .kicker { font-size: 11px; font-weight: 700; letter-spacing: 2px; fill: #22d3ee; text-transform: uppercase; }
+      .label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; fill: #64748b; text-transform: uppercase; }
+      .card-title { font-size: 16px; font-weight: 700; fill: #f1f5f9; }
+      .card-body { font-size: 12.5px; fill: #94a3b8; }
+      .mono { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; fill: #c4b5fd; }
+      .mono-dim { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; fill: #64748b; }
+      .tag { font-size: 10.5px; font-weight: 700; fill: #67e8f9; letter-spacing: 1px; }
+      .num { font-size: 11px; font-weight: 700; fill: #0b1224; }
+      .agent { font-size: 12.5px; fill: #cbd5e1; }
+      .agent-bullet { fill: #22d3ee; }
+      .arrow { stroke: #8aa0c7; stroke-width: 1.6; fill: none; marker-end: url(#arr); }
+      .arrow-soft { stroke: #475569; stroke-width: 1.4; fill: none; marker-end: url(#arr); stroke-dasharray: 4 4; }
+      .arrow-accent { stroke: #22d3ee; stroke-width: 1.8; fill: none; marker-end: url(#arrA); }
     </style>
   </defs>
 
-  <rect class="bg" x="0" y="0" width="1200" height="720"/>
+  <rect width="1280" height="880" fill="url(#bg)"/>
+  <circle cx="640" cy="540" r="320" fill="url(#glow)" opacity="0.6"/>
 
-  <text class="title" x="56" y="54">Grok Agents Memory: intended experience</text>
-  <text class="subtitle" x="56" y="84">Grok asks first, writes real SQLite state, then agents work from a shared job board instead of vibes.</text>
+  <!-- Header -->
+  <text class="kicker" x="56" y="58">Architecture</text>
+  <text class="h1" x="56" y="92">Grok agents with real SQLite memory</text>
+  <text class="h2" x="56" y="118">One launcher. One interview. A shared job board and durable memory persisted through an MCP server.</text>
 
-  <text class="section-label" x="62" y="126">USER STARTUP</text>
-  <rect class="box-blue" x="56" y="144" width="220" height="94"/>
-  <text class="node-title" x="76" y="176">Clone repo</text>
-  <text class="node-text" x="76" y="202">Install once, then run</text>
-  <text class="code" x="76" y="222">start_project.*</text>
+  <!-- ============== ROW 1: Startup pipeline ============== -->
+  <text class="label" x="56" y="166">1 · Startup pipeline</text>
 
-  <rect class="box-green" x="320" y="144" width="234" height="94"/>
-  <text class="node-title" x="340" y="176">Launcher preflight</text>
-  <text class="node-text" x="340" y="202">Checks Python, sqlite3,</text>
-  <text class="node-text" x="340" y="222">Grok CLI, MCP health</text>
-
-  <rect class="box-amber" x="598" y="144" width="240" height="94"/>
-  <text class="node-title" x="618" y="176">Grok opens</text>
-  <text class="node-text" x="618" y="202">Agent: project-founder</text>
-  <text class="code" x="618" y="222">/project-kickoff</text>
-
-  <rect class="box-rose" x="882" y="144" width="260" height="94"/>
-  <text class="node-title" x="902" y="176">Short interview</text>
-  <text class="node-text" x="902" y="202">Six questions, then stop</text>
-  <text class="node-text" x="902" y="222">No product files yet</text>
-
-  <path class="arrow" d="M276 191 H320"/>
-  <path class="arrow" d="M554 191 H598"/>
-  <path class="arrow" d="M838 191 H882"/>
-
-  <text class="section-label" x="62" y="292">PERSISTED COORDINATION STATE</text>
-
-  <rect class="box-gray" x="56" y="312" width="286" height="118"/>
-  <text class="node-title" x="76" y="344">Project brief saved</text>
-  <text class="node-text" x="76" y="370">User answers become a</text>
-  <text class="node-text" x="76" y="390">durable project memory</text>
-  <text class="code" x="76" y="414">memory_write(kind=brief)</text>
-
-  <rect class="box-violet" x="56" y="474" width="286" height="118"/>
-  <text class="node-title" x="76" y="506">Initial jobs created</text>
-  <text class="node-text" x="76" y="532">Founder creates scoped jobs</text>
-  <text class="node-text" x="76" y="552">for the selected team</text>
-  <text class="code" x="76" y="576">job_create(...)</text>
-
-  <g transform="translate(416 304)">
-    <path class="db-fill" d="M0 30 C0 12, 250 12, 250 30 L250 242 C250 260, 0 260, 0 242 Z"/>
-    <ellipse class="db" cx="125" cy="30" rx="125" ry="30"/>
-    <path class="db" d="M0 30 L0 242"/>
-    <path class="db" d="M250 30 L250 242"/>
-    <ellipse class="db" cx="125" cy="242" rx="125" ry="30"/>
-    <text class="node-title" x="54" y="88">SQLite MCP</text>
-    <text class="node-text" x="42" y="120">projects</text>
-    <text class="node-text" x="42" y="144">memories</text>
-    <text class="node-text" x="42" y="168">jobs</text>
-    <text class="node-text" x="42" y="192">job_events</text>
-    <text class="node-text" x="42" y="216">job_artifacts</text>
+  <!-- Card A: Launcher -->
+  <g transform="translate(56 184)">
+    <rect width="276" height="138" rx="14" fill="url(#card)" stroke="#1f2a44" stroke-width="1"/>
+    <circle cx="28" cy="30" r="11" fill="#22d3ee"/>
+    <text class="num" x="24.5" y="34">1</text>
+    <text class="card-title" x="52" y="35">Launcher</text>
+    <text class="card-body" x="22" y="64">User runs one script. Preflight</text>
+    <text class="card-body" x="22" y="82">checks Python, sqlite3, Grok</text>
+    <text class="card-body" x="22" y="100">CLI, and the MCP handshake.</text>
+    <text class="mono" x="22" y="124">scripts/start_project.*</text>
   </g>
 
-  <path class="arrow" d="M1012 238 C1012 286, 744 280, 666 350"/>
-  <path class="arrow" d="M342 371 H416"/>
-  <path class="arrow" d="M342 533 H416"/>
+  <!-- Card B: Grok opens -->
+  <g transform="translate(364 184)">
+    <rect width="276" height="138" rx="14" fill="url(#card)" stroke="#1f2a44" stroke-width="1"/>
+    <circle cx="28" cy="30" r="11" fill="#22d3ee"/>
+    <text class="num" x="24.5" y="34">2</text>
+    <text class="card-title" x="52" y="35">Grok opens</text>
+    <text class="card-body" x="22" y="64">project-founder loads its</text>
+    <text class="card-body" x="22" y="82">context pack and waits. No</text>
+    <text class="card-body" x="22" y="100">files written yet.</text>
+    <text class="mono" x="22" y="124">grok --agent project-founder</text>
+  </g>
 
-  <text class="section-label" x="730" y="292">AGENT WORK LOOP</text>
+  <!-- Card C: Interview -->
+  <g transform="translate(672 184)">
+    <rect width="276" height="138" rx="14" fill="url(#card)" stroke="#1f2a44" stroke-width="1"/>
+    <circle cx="28" cy="30" r="11" fill="#22d3ee"/>
+    <text class="num" x="24.5" y="34">3</text>
+    <text class="card-title" x="52" y="35">Six-question interview</text>
+    <text class="card-body" x="22" y="64">What · who · first workflow ·</text>
+    <text class="card-body" x="22" y="82">stack · feel · team size. Asked</text>
+    <text class="card-body" x="22" y="100">in one message, then stop.</text>
+    <text class="mono" x="22" y="124">/project-kickoff</text>
+  </g>
 
-  <rect class="box-blue" x="724" y="312" width="200" height="80"/>
-  <text class="node-title" x="744" y="342">Load context</text>
-  <text class="code" x="744" y="366">context_pack_get</text>
+  <!-- Card D: Persist -->
+  <g transform="translate(980 184)">
+    <rect width="244" height="138" rx="14" fill="url(#card)" stroke="#2a3f6e" stroke-width="1.4"/>
+    <circle cx="28" cy="30" r="11" fill="url(#accent)"/>
+    <text class="num" x="24.5" y="34">4</text>
+    <text class="card-title" x="52" y="35">Persist brief + jobs</text>
+    <text class="card-body" x="22" y="64">Brief saved as durable memory.</text>
+    <text class="card-body" x="22" y="82">Initial jobs created for the</text>
+    <text class="card-body" x="22" y="100">selected agent team.</text>
+    <text class="mono" x="22" y="124">memory_write · job_create</text>
+  </g>
 
-  <rect class="box-green" x="974" y="312" width="170" height="80"/>
-  <text class="node-title" x="994" y="342">Claim job</text>
-  <text class="code" x="994" y="366">job_claim</text>
+  <!-- Arrows between cards -->
+  <path class="arrow" d="M332 253 H364"/>
+  <path class="arrow" d="M640 253 H672"/>
+  <path class="arrow-accent" d="M948 253 H980"/>
 
-  <rect class="box-amber" x="724" y="448" width="200" height="92"/>
-  <text class="node-title" x="744" y="478">Work + report</text>
-  <text class="code" x="744" y="502">job_report</text>
-  <text class="code" x="744" y="522">job_append_event</text>
+  <!-- ============== ROW 2: SQLite hub ============== -->
+  <text class="label" x="56" y="372">2 · Persisted coordination state</text>
 
-  <rect class="box-rose" x="974" y="448" width="170" height="92"/>
-  <text class="node-title" x="994" y="478">Finish explicitly</text>
-  <text class="code" x="994" y="502">job_complete</text>
-  <text class="code" x="994" y="522">job_block</text>
+  <!-- SQLite slab -->
+  <g transform="translate(56 392)">
+    <rect width="608" height="220" rx="18" fill="url(#db)" stroke="#1f2a44" stroke-width="1"/>
+    <rect width="608" height="220" rx="18" fill="url(#hub)" opacity="0.6"/>
 
-  <path class="arrow" d="M666 424 C704 404, 704 362, 724 352"/>
-  <path class="arrow" d="M924 352 H974"/>
-  <path class="arrow" d="M1059 392 V448"/>
-  <path class="arrow" d="M974 494 H924"/>
-  <path class="arrow" d="M824 448 V392"/>
-  <path class="arrow-soft" d="M724 494 C690 494, 690 454, 666 454"/>
-  <path class="arrow-soft" d="M1059 540 C1059 638, 542 638, 542 576"/>
+    <!-- header strip -->
+    <g transform="translate(28 26)">
+      <rect width="42" height="42" rx="10" fill="#0b1224" stroke="#22d3ee" stroke-width="1.4"/>
+      <!-- database glyph -->
+      <ellipse cx="21" cy="14" rx="13" ry="4.2" fill="none" stroke="#22d3ee" stroke-width="1.4"/>
+      <path d="M8 14 V28 a13 4.2 0 0 0 26 0 V14" fill="none" stroke="#22d3ee" stroke-width="1.4"/>
+      <path d="M8 21 a13 4.2 0 0 0 26 0" fill="none" stroke="#22d3ee" stroke-width="1.2" opacity="0.7"/>
+      <text class="card-title" x="60" y="22">SQLite via MCP server</text>
+      <text class="card-body" x="60" y="42">.grok/memory/agent_memory.sqlite · server: agent_memory</text>
+    </g>
 
-  <rect class="box-gray" x="724" y="588" width="420" height="72"/>
-  <text class="node-title" x="744" y="618">Durable facts only</text>
-  <text class="node-text" x="744" y="642">Agents write long-term decisions to memory, not every scratch thought.</text>
+    <!-- Tables grid -->
+    <g transform="translate(28 96)" font-family="Inter, system-ui, sans-serif">
+      <g transform="translate(0 0)">
+        <rect width="170" height="44" rx="9" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="14" y="20">PROJECT</text>
+        <text class="mono" x="14" y="35">projects</text>
+      </g>
+      <g transform="translate(186 0)">
+        <rect width="170" height="44" rx="9" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="14" y="20">KNOWLEDGE</text>
+        <text class="mono" x="14" y="35">memories</text>
+      </g>
+      <g transform="translate(372 0)">
+        <rect width="180" height="44" rx="9" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="14" y="20">WORK</text>
+        <text class="mono" x="14" y="35">jobs</text>
+      </g>
 
-  <path class="arrow-soft" d="M934 588 C934 566, 686 566, 666 536"/>
+      <g transform="translate(0 56)">
+        <rect width="170" height="44" rx="9" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="14" y="20">TIMELINE</text>
+        <text class="mono" x="14" y="35">job_events</text>
+      </g>
+      <g transform="translate(186 56)">
+        <rect width="170" height="44" rx="9" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="14" y="20">OUTPUTS</text>
+        <text class="mono" x="14" y="35">job_artifacts</text>
+      </g>
+      <g transform="translate(372 56)">
+        <rect width="180" height="44" rx="9" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="14" y="20">HISTORY</text>
+        <text class="mono" x="14" y="35">agent_runs</text>
+      </g>
+    </g>
+  </g>
 
-  <rect class="box" x="56" y="628" width="598" height="54"/>
-  <text class="node-title" x="76" y="654">No fake persistence</text>
-  <text class="node-text" x="248" y="654">If a save did not succeed through MCP, the agent must not claim it remembered.</text>
+  <!-- Agent roster -->
+  <g transform="translate(696 392)">
+    <rect width="528" height="220" rx="18" fill="url(#card)" stroke="#1f2a44" stroke-width="1"/>
+    <text class="card-title" x="24" y="40">Persistent agent roster</text>
+    <text class="card-body" x="24" y="60">Named specialists, not disposable role-play.</text>
+
+    <g transform="translate(24 84)">
+      <circle class="agent-bullet" cx="6" cy="-3" r="3.2"/>
+      <text class="agent" x="18" y="0">project-founder</text>
+      <text class="mono-dim" x="160" y="0">intake + orchestration</text>
+    </g>
+    <g transform="translate(24 108)">
+      <circle class="agent-bullet" cx="6" cy="-3" r="3.2"/>
+      <text class="agent" x="18" y="0">product-lead</text>
+      <text class="mono-dim" x="160" y="0">scope + acceptance criteria</text>
+    </g>
+    <g transform="translate(24 132)">
+      <circle class="agent-bullet" cx="6" cy="-3" r="3.2"/>
+      <text class="agent" x="18" y="0">architect</text>
+      <text class="mono-dim" x="160" y="0">design, risks, boundaries</text>
+    </g>
+    <g transform="translate(24 156)">
+      <circle class="agent-bullet" cx="6" cy="-3" r="3.2"/>
+      <text class="agent" x="18" y="0">implementer</text>
+      <text class="mono-dim" x="160" y="0">change + verification</text>
+    </g>
+    <g transform="translate(24 180)">
+      <circle class="agent-bullet" cx="6" cy="-3" r="3.2"/>
+      <text class="agent" x="18" y="0">reviewer</text>
+      <text class="mono-dim" x="160" y="0">adversarial review</text>
+    </g>
+    <g transform="translate(24 204)">
+      <circle class="agent-bullet" cx="6" cy="-3" r="3.2"/>
+      <text class="agent" x="18" y="0">memory-curator</text>
+      <text class="mono-dim" x="160" y="0">cleanup + consolidation</text>
+    </g>
+
+    <!-- presets pill row -->
+    <g transform="translate(312 96)">
+      <text class="label" x="0" y="0">Team presets</text>
+      <g transform="translate(0 16)">
+        <rect width="64" height="22" rx="11" fill="#0b1224" stroke="#334155"/>
+        <text x="32" y="15" text-anchor="middle" font-size="11" fill="#cbd5e1" font-weight="700">lean</text>
+      </g>
+      <g transform="translate(72 16)">
+        <rect width="80" height="22" rx="11" fill="#0b1224" stroke="#334155"/>
+        <text x="40" y="15" text-anchor="middle" font-size="11" fill="#cbd5e1" font-weight="700">standard</text>
+      </g>
+      <g transform="translate(160 16)">
+        <rect width="56" height="22" rx="11" fill="#0b1224" stroke="#334155"/>
+        <text x="28" y="15" text-anchor="middle" font-size="11" fill="#cbd5e1" font-weight="700">full</text>
+      </g>
+      <text class="mono-dim" x="0" y="58">lean = founder · architect · implementer</text>
+      <text class="mono-dim" x="0" y="76">standard = lean + product-lead + reviewer</text>
+      <text class="mono-dim" x="0" y="94">full = standard + memory-curator</text>
+    </g>
+  </g>
+
+  <!-- arrow row1 -> row2 -->
+  <path class="arrow-accent" d="M1100 322 V392"/>
+
+  <!-- ============== ROW 3: Work loop ============== -->
+  <text class="label" x="56" y="660">3 · Agent work loop</text>
+
+  <g transform="translate(56 678)">
+    <rect width="1168" height="158" rx="18" fill="url(#card)" stroke="#1f2a44" stroke-width="1"/>
+
+    <!-- 5 stages laid out horizontally -->
+    <g transform="translate(28 36)">
+      <!-- stage 1 -->
+      <g>
+        <rect width="210" height="86" rx="12" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="16" y="22">LOAD</text>
+        <text class="card-title" x="16" y="46" font-size="14">Context pack</text>
+        <text class="mono" x="16" y="68">context_pack_get</text>
+      </g>
+      <!-- stage 2 -->
+      <g transform="translate(228 0)">
+        <rect width="210" height="86" rx="12" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="16" y="22">CLAIM</text>
+        <text class="card-title" x="16" y="46" font-size="14">Take ownership</text>
+        <text class="mono" x="16" y="68">job_claim</text>
+      </g>
+      <!-- stage 3 -->
+      <g transform="translate(456 0)">
+        <rect width="210" height="86" rx="12" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="16" y="22">WORK</text>
+        <text class="card-title" x="16" y="46" font-size="14">Progress + handoffs</text>
+        <text class="mono" x="16" y="68">job_report · job_append_event</text>
+      </g>
+      <!-- stage 4 -->
+      <g transform="translate(684 0)">
+        <rect width="210" height="86" rx="12" fill="#0b1224" stroke="#1f2a44"/>
+        <text class="tag" x="16" y="22">FINISH</text>
+        <text class="card-title" x="16" y="46" font-size="14">Close explicitly</text>
+        <text class="mono" x="16" y="68">job_complete · job_block</text>
+      </g>
+      <!-- stage 5 -->
+      <g transform="translate(912 0)">
+        <rect width="200" height="86" rx="12" fill="#0b1224" stroke="#2a3f6e" stroke-width="1.4"/>
+        <text class="tag" x="16" y="22" fill="#c4b5fd">REMEMBER</text>
+        <text class="card-title" x="16" y="46" font-size="14">Durable facts only</text>
+        <text class="mono" x="16" y="68">memory_write</text>
+      </g>
+
+      <!-- connectors -->
+      <path class="arrow" d="M210 43 H228"/>
+      <path class="arrow" d="M438 43 H456"/>
+      <path class="arrow" d="M666 43 H684"/>
+      <path class="arrow-accent" d="M894 43 H912"/>
+    </g>
+
+    <text class="card-body" x="28" y="142">No fake persistence. If a write does not succeed through MCP, the agent does not claim it remembered.</text>
+  </g>
+
+  <!-- arrow row2 -> row3 (back to SQLite) -->
+  <path class="arrow-soft" d="M360 612 V678"/>
 </svg>

@@ -1,112 +1,211 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
-  <title id="title">User experience flow for Grok agents memory</title>
-  <desc id="desc">A storyboard diagram of the user experience: clone the repo, run the launcher, see preflight checks, open Grok, answer the kickoff interview, receive a saved brief and job list, then return later with remembered context.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-labelledby="title desc" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <title id="title">Grok agents user experience storyboard</title>
+  <desc id="desc">A six-panel storyboard. The user clones the repo and runs the launcher, sees preflight checks pass, Grok opens with the project-founder agent, the user answers a six-question interview, Grok confirms with saved memory and job ids, and on return Grok resumes with full context.</desc>
+
   <defs>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
-      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1224"/>
+      <stop offset="1" stop-color="#0a0f1f"/>
+    </linearGradient>
+    <linearGradient id="card2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141c33"/>
+      <stop offset="1" stop-color="#0f1629"/>
+    </linearGradient>
+    <linearGradient id="userCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1f2a"/>
+      <stop offset="1" stop-color="#0a1620"/>
+    </linearGradient>
+    <linearGradient id="saved" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1535"/>
+      <stop offset="1" stop-color="#120f29"/>
+    </linearGradient>
+    <linearGradient id="laterG" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#172554"/>
+      <stop offset="1" stop-color="#134e4a"/>
+    </linearGradient>
+    <radialGradient id="glow2" cx="0.5" cy="0.4" r="0.6">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,5 L0,10 Z" fill="#8aa0c7"/>
+    </marker>
+    <marker id="arr2A" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,5 L0,10 Z" fill="#22d3ee"/>
     </marker>
     <style>
-      .bg { fill: #f8fafc; }
-      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
-      .subtitle { font: 16px Arial, sans-serif; fill: #475569; }
-      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 10; }
-      .panel-soft { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 2; rx: 10; }
-      .terminal { fill: #0f172a; stroke: #334155; stroke-width: 2; rx: 10; }
-      .grok { fill: #eef2ff; stroke: #818cf8; stroke-width: 2; rx: 10; }
-      .user { fill: #ecfdf5; stroke: #34d399; stroke-width: 2; rx: 10; }
-      .saved { fill: #fffbeb; stroke: #f59e0b; stroke-width: 2; rx: 10; }
-      .later { fill: #fdf2f8; stroke: #f472b6; stroke-width: 2; rx: 10; }
-      .label { font: 700 12px Arial, sans-serif; letter-spacing: 1px; fill: #64748b; }
-      .h { font: 700 18px Arial, sans-serif; fill: #0f172a; }
-      .body { font: 14px Arial, sans-serif; fill: #334155; }
-      .small { font: 12px Arial, sans-serif; fill: #475569; }
-      .term { font: 13px Consolas, monospace; fill: #e2e8f0; }
-      .term-dim { font: 13px Consolas, monospace; fill: #94a3b8; }
-      .code { font: 700 13px Consolas, monospace; fill: #1e293b; }
-      .badge { fill: #e0f2fe; stroke: #38bdf8; stroke-width: 1.5; rx: 16; }
-      .badge-text { font: 700 12px Arial, sans-serif; fill: #075985; }
-      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
-      .arrow-soft { stroke: #64748b; stroke-width: 2; stroke-dasharray: 6 5; fill: none; marker-end: url(#arrow); }
+      .h1 { font-size: 30px; font-weight: 700; fill: #f8fafc; letter-spacing: -0.4px; }
+      .h2 { font-size: 14px; fill: #94a3b8; }
+      .kicker { font-size: 11px; font-weight: 700; letter-spacing: 2px; fill: #22d3ee; text-transform: uppercase; }
+      .step-num { font-size: 12px; font-weight: 800; fill: #0b1224; }
+      .step-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px; fill: #64748b; text-transform: uppercase; }
+      .panel-title { font-size: 17px; font-weight: 700; fill: #f1f5f9; }
+      .panel-body { font-size: 12.5px; fill: #94a3b8; }
+      .panel-body-em { font-size: 12.5px; fill: #cbd5e1; }
+      .term { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; fill: #c4b5fd; }
+      .term-dim { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: #64748b; }
+      .term-ok { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; fill: #4ade80; }
+      .term-prompt { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; fill: #22d3ee; }
+      .user-line { font-size: 12.5px; fill: #fde68a; font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .arrow { stroke: #475569; stroke-width: 1.6; fill: none; marker-end: url(#arr2); }
+      .arrow-accent { stroke: #22d3ee; stroke-width: 1.8; fill: none; marker-end: url(#arr2A); }
     </style>
   </defs>
 
-  <rect class="bg" width="1200" height="780"/>
-  <text class="title" x="54" y="52">What the user experience should feel like</text>
-  <text class="subtitle" x="54" y="82">A guided start: run one launcher, answer one short interview, then Grok remembers and coordinates the agent team.</text>
+  <rect width="1280" height="820" fill="url(#bg2)"/>
+  <circle cx="640" cy="380" r="420" fill="url(#glow2)"/>
 
-  <rect class="badge" x="54" y="112" width="158" height="32"/>
-  <text class="badge-text" x="76" y="133">FIRST INSTALL</text>
+  <!-- Header -->
+  <text class="kicker" x="56" y="58">User experience</text>
+  <text class="h1" x="56" y="92">What the flow feels like from the seat in front</text>
+  <text class="h2" x="56" y="118">One launcher. One short interview. Real receipts in SQLite. Same context on every return.</text>
 
-  <rect class="terminal" x="54" y="160" width="330" height="154"/>
-  <text class="label" x="74" y="190" fill="#93c5fd">1. USER TYPES</text>
-  <text class="term" x="74" y="224">git clone &lt;repo-url&gt;</text>
-  <text class="term" x="74" y="248">cd grok-agents-memory</text>
-  <text class="term" x="74" y="272">scripts/start_project.cmd</text>
-  <text class="term-dim" x="74" y="294"># or ./scripts/start_project.ps1</text>
+  <!-- ============== ROW 1: First install ============== -->
+  <text class="step-label" x="56" y="166">First install</text>
+  <line x1="138" y1="161" x2="1224" y2="161" stroke="#1f2a44" stroke-width="1"/>
 
-  <rect class="panel" x="432" y="160" width="330" height="154"/>
-  <text class="label" x="452" y="190">2. LAUNCHER CHECKS</text>
-  <text class="h" x="452" y="222">Preflight gives confidence</text>
-  <text class="body" x="452" y="250">Python found, sqlite3 works,</text>
-  <text class="body" x="452" y="272">database exists or is created,</text>
-  <text class="body" x="452" y="294">MCP server handshake passes.</text>
+  <!-- Panel 1: Terminal -->
+  <g transform="translate(56 184)">
+    <rect width="384" height="222" rx="14" fill="#06070d" stroke="#1f2a44"/>
+    <!-- title bar -->
+    <rect width="384" height="32" rx="14" fill="#0f1629"/>
+    <rect y="18" width="384" height="14" fill="#0f1629"/>
+    <circle cx="18" cy="16" r="5" fill="#ef4444"/>
+    <circle cx="36" cy="16" r="5" fill="#f59e0b"/>
+    <circle cx="54" cy="16" r="5" fill="#22c55e"/>
+    <text class="term-dim" x="180" y="20">grok-agents-memory — bash</text>
+    <!-- step badge -->
+    <g transform="translate(24 56)">
+      <rect width="24" height="22" rx="6" fill="#22d3ee"/>
+      <text class="step-num" x="12" y="15.5" text-anchor="middle">1</text>
+      <text class="step-label" x="36" y="16" fill="#94a3b8">User types</text>
+    </g>
+    <text class="term" x="24" y="106">$ git clone &lt;repo-url&gt;</text>
+    <text class="term" x="24" y="130">$ cd grok-agents-memory</text>
+    <text class="term" x="24" y="154">$ scripts/start_project.cmd</text>
+    <text class="term-dim" x="24" y="178"># or ./scripts/start_project.ps1</text>
+    <text class="term-dim" x="24" y="196"># or sh scripts/start_project.sh</text>
+  </g>
 
-  <rect class="grok" x="810" y="160" width="330" height="154"/>
-  <text class="label" x="830" y="190">3. GROK OPENS</text>
-  <text class="h" x="830" y="222">No build yet</text>
-  <text class="body" x="830" y="250">Grok loads project-founder,</text>
-  <text class="body" x="830" y="272">reads context_pack_get,</text>
-  <text class="body" x="830" y="294">then waits for kickoff.</text>
+  <!-- Panel 2: Preflight -->
+  <g transform="translate(464 184)">
+    <rect width="384" height="222" rx="14" fill="url(#card2)" stroke="#1f2a44"/>
+    <g transform="translate(24 24)">
+      <rect width="24" height="22" rx="6" fill="#22d3ee"/>
+      <text class="step-num" x="12" y="15.5" text-anchor="middle">2</text>
+      <text class="step-label" x="36" y="16">Preflight</text>
+    </g>
+    <text class="panel-title" x="24" y="84">Confidence before launch</text>
+    <text class="panel-body" x="24" y="108">The launcher does the boring work first,</text>
+    <text class="panel-body" x="24" y="126">so you do not start a session blind.</text>
 
-  <path class="arrow" d="M384 237 H432"/>
-  <path class="arrow" d="M762 237 H810"/>
+    <g transform="translate(24 144)">
+      <text class="term-ok" x="0" y="0">✓ python · sqlite3 import</text>
+      <text class="term-ok" x="0" y="20">✓ .grok/memory/agent_memory.sqlite</text>
+      <text class="term-ok" x="0" y="40">✓ grok inspect → agent_memory</text>
+      <text class="term-ok" x="0" y="60">✓ MCP handshake</text>
+    </g>
+  </g>
 
-  <rect class="badge" x="54" y="356" width="172" height="32"/>
-  <text class="badge-text" x="76" y="377">FIRST CONVERSATION</text>
+  <!-- Panel 3: Grok opens -->
+  <g transform="translate(872 184)">
+    <rect width="352" height="222" rx="14" fill="url(#card2)" stroke="#2a3f6e" stroke-width="1.4"/>
+    <g transform="translate(24 24)">
+      <rect width="24" height="22" rx="6" fill="#22d3ee"/>
+      <text class="step-num" x="12" y="15.5" text-anchor="middle">3</text>
+      <text class="step-label" x="36" y="16">Grok opens</text>
+    </g>
+    <text class="panel-title" x="24" y="84">project-founder ready</text>
+    <text class="panel-body" x="24" y="108">Loads context_pack_get and waits.</text>
+    <text class="panel-body" x="24" y="126">No files created until you answer.</text>
 
-  <rect class="grok" x="54" y="408" width="330" height="196"/>
-  <text class="label" x="74" y="438">4. GROK ASKS FIRST</text>
-  <text class="h" x="74" y="470">Six-question interview</text>
-  <text class="body" x="74" y="498">What are we building?</text>
-  <text class="body" x="74" y="520">Who is it for?</text>
-  <text class="body" x="74" y="542">First usable workflow?</text>
-  <text class="body" x="74" y="564">Stack, feel, team size?</text>
-  <text class="code" x="74" y="590">No product files before answers.</text>
+    <g transform="translate(24 154)">
+      <rect width="304" height="42" rx="10" fill="#06070d" stroke="#1f2a44"/>
+      <text class="term-prompt" x="14" y="26">▸ /project-kickoff</text>
+    </g>
+  </g>
 
-  <rect class="user" x="432" y="408" width="330" height="196"/>
-  <text class="label" x="452" y="438">5. USER ANSWERS</text>
-  <text class="h" x="452" y="470">Short answers are enough</text>
-  <text class="body" x="452" y="498">Example:</text>
-  <text class="body" x="452" y="522">Tiny task tracker, web app,</text>
-  <text class="body" x="452" y="544">React/Vite, local SQLite,</text>
-  <text class="body" x="452" y="566">standard team.</text>
-  <text class="small" x="452" y="590">The user stays in control of scope.</text>
+  <!-- arrows row 1 -->
+  <path class="arrow" d="M440 295 H464"/>
+  <path class="arrow-accent" d="M848 295 H872"/>
 
-  <rect class="saved" x="810" y="408" width="330" height="196"/>
-  <text class="label" x="830" y="438">6. GROK CONFIRMS</text>
-  <text class="h" x="830" y="470">Saved, not hand-waved</text>
-  <text class="body" x="830" y="498">Project brief memory id</text>
-  <text class="body" x="830" y="520">Project record updated</text>
-  <text class="body" x="830" y="542">Initial job ids created</text>
-  <text class="body" x="830" y="564">Founder handoff recorded</text>
-  <text class="code" x="830" y="590">SQLite is the receipt.</text>
+  <!-- ============== ROW 2: First conversation ============== -->
+  <text class="step-label" x="56" y="448">First conversation</text>
+  <line x1="170" y1="443" x2="1224" y2="443" stroke="#1f2a44" stroke-width="1"/>
 
-  <path class="arrow" d="M384 506 H432"/>
-  <path class="arrow" d="M762 506 H810"/>
+  <!-- Panel 4: The six questions -->
+  <g transform="translate(56 466)">
+    <rect width="384" height="222" rx="14" fill="url(#card2)" stroke="#1f2a44"/>
+    <g transform="translate(24 24)">
+      <rect width="24" height="22" rx="6" fill="#a78bfa"/>
+      <text class="step-num" x="12" y="15.5" text-anchor="middle">4</text>
+      <text class="step-label" x="36" y="16">Grok asks first</text>
+    </g>
+    <text class="panel-title" x="24" y="84">Six questions, one message</text>
+    <g transform="translate(24 104)" font-size="12" fill="#94a3b8">
+      <text y="0"><tspan fill="#22d3ee" font-weight="700">1.</tspan> What are we building, for whom?</text>
+      <text y="18"><tspan fill="#22d3ee" font-weight="700">2.</tspan> First workflow that must be usable?</text>
+      <text y="36"><tspan fill="#22d3ee" font-weight="700">3.</tspan> Web · mobile · CLI · API · library?</text>
+      <text y="54"><tspan fill="#22d3ee" font-weight="700">4.</tspan> Stack, constraints, deploy target?</text>
+      <text y="72"><tspan fill="#22d3ee" font-weight="700">5.</tspan> What should the experience feel like?</text>
+      <text y="90"><tspan fill="#22d3ee" font-weight="700">6.</tspan> Team: lean · standard · full?</text>
+    </g>
+  </g>
 
-  <rect class="panel-soft" x="54" y="648" width="506" height="92"/>
-  <text class="label" x="74" y="678">WHAT THE USER SEES NEXT</text>
-  <text class="h" x="74" y="708">A clear queue instead of mystery work</text>
-  <text class="body" x="74" y="732">Product lead, architect, implementer, and reviewer each get a real job id and context.</text>
+  <!-- Panel 5: User answers -->
+  <g transform="translate(464 466)">
+    <rect width="384" height="222" rx="14" fill="url(#userCard)" stroke="#134e4a"/>
+    <g transform="translate(24 24)">
+      <rect width="24" height="22" rx="6" fill="#34d399"/>
+      <text class="step-num" x="12" y="15.5" text-anchor="middle">5</text>
+      <text class="step-label" x="36" y="16" fill="#94a3b8">User answers</text>
+    </g>
+    <text class="panel-title" x="24" y="84">Short answers are enough</text>
+    <text class="panel-body" x="24" y="106">You stay in control of scope.</text>
 
-  <rect class="later" x="634" y="648" width="506" height="92"/>
-  <text class="label" x="654" y="678">RETURNING LATER</text>
-  <text class="h" x="654" y="708">Grok resumes with context</text>
-  <text class="body" x="654" y="732">Agents load the brief, open jobs, previous events, and durable decisions before acting.</text>
+    <g transform="translate(24 130)">
+      <text class="user-line" x="0" y="0">› tiny task tracker, for me</text>
+      <text class="user-line" x="0" y="18">› create + complete a task</text>
+      <text class="user-line" x="0" y="36">› web app, React + Vite</text>
+      <text class="user-line" x="0" y="54">› local SQLite, no auth</text>
+      <text class="user-line" x="0" y="72">› fast, plain, keyboard-first</text>
+      <text class="user-line" x="0" y="90">› standard</text>
+    </g>
+  </g>
 
-  <path class="arrow-soft" d="M975 604 C975 630, 962 636, 942 648"/>
-  <path class="arrow-soft" d="M219 604 C219 630, 240 636, 272 648"/>
+  <!-- Panel 6: Receipt -->
+  <g transform="translate(872 466)">
+    <rect width="352" height="222" rx="14" fill="url(#saved)" stroke="#3b2870"/>
+    <g transform="translate(24 24)">
+      <rect width="24" height="22" rx="6" fill="#a78bfa"/>
+      <text class="step-num" x="12" y="15.5" text-anchor="middle">6</text>
+      <text class="step-label" x="36" y="16" fill="#c4b5fd">Receipt, not vibes</text>
+    </g>
+    <text class="panel-title" x="24" y="84">Saved to SQLite</text>
+    <g transform="translate(24 108)" font-size="12.5" fill="#cbd5e1" font-family="JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      <text y="0"><tspan fill="#22d3ee">brief </tspan>memory_id=m_4a1c</text>
+      <text y="20"><tspan fill="#22d3ee">project </tspan>upserted p_001</text>
+      <text y="40"><tspan fill="#22d3ee">jobs </tspan>j_011 j_012 j_013</text>
+      <text y="60"><tspan fill="#22d3ee">handoff </tspan>founder → product-lead</text>
+    </g>
+    <text class="panel-body" x="24" y="194">If a write fails, Grok stops — never pretends.</text>
+  </g>
 
-  <path class="arrow-soft" d="M975 314 C1010 352, 1010 374, 975 408"/>
-  <path class="arrow-soft" d="M219 314 C184 352, 184 374, 219 408"/>
+  <!-- arrows row 2 -->
+  <path class="arrow" d="M440 577 H464"/>
+  <path class="arrow-accent" d="M848 577 H872"/>
+
+  <!-- ============== Footer band: returning later ============== -->
+  <g transform="translate(56 712)">
+    <rect width="1168" height="84" rx="14" fill="url(#laterG)" opacity="0.55"/>
+    <rect width="1168" height="84" rx="14" fill="none" stroke="#1f2a44"/>
+    <g transform="translate(24 24)">
+      <rect width="24" height="22" rx="6" fill="#22d3ee"/>
+      <text class="step-num" x="12" y="15.5" text-anchor="middle">↻</text>
+      <text class="step-label" x="36" y="16" fill="#a5f3fc">Returning later</text>
+    </g>
+    <text class="panel-title" x="24" y="68">Grok resumes with the brief, open jobs, prior events, and durable decisions — before doing anything.</text>
+    <text class="term" x="900" y="50">context_pack_get</text>
+    <text class="term-dim" x="900" y="68">→ project + memories + jobs</text>
+  </g>
 </svg>
