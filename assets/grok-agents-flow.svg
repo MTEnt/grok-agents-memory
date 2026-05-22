@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">Grok agents memory and job board flow</title>
+  <desc id="desc">A flow diagram showing a user launching Grok, completing a kickoff interview, saving a project brief to SQLite, creating jobs, and agents using context packs, job claims, reports, completion, and durable memory.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 16px Arial, sans-serif; fill: #475569; }
+      .section-label { font: 700 13px Arial, sans-serif; letter-spacing: 1px; fill: #475569; }
+      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 8; }
+      .box-blue { fill: #eff6ff; stroke: #60a5fa; stroke-width: 2; rx: 8; }
+      .box-green { fill: #ecfdf5; stroke: #34d399; stroke-width: 2; rx: 8; }
+      .box-amber { fill: #fffbeb; stroke: #f59e0b; stroke-width: 2; rx: 8; }
+      .box-rose { fill: #fff1f2; stroke: #fb7185; stroke-width: 2; rx: 8; }
+      .box-violet { fill: #f5f3ff; stroke: #8b5cf6; stroke-width: 2; rx: 8; }
+      .box-gray { fill: #f1f5f9; stroke: #94a3b8; stroke-width: 2; rx: 8; }
+      .db { fill: #ffffff; stroke: #0f766e; stroke-width: 2; }
+      .db-fill { fill: #ccfbf1; stroke: #0f766e; stroke-width: 2; }
+      .node-title { font: 700 17px Arial, sans-serif; fill: #0f172a; }
+      .node-text { font: 13px Arial, sans-serif; fill: #334155; }
+      .tiny { font: 12px Arial, sans-serif; fill: #475569; }
+      .code { font: 700 12px Consolas, monospace; fill: #1e293b; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .arrow-soft { stroke: #64748b; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-dasharray: 6 5; }
+      .rail { fill: none; stroke: #e2e8f0; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="720"/>
+
+  <text class="title" x="56" y="54">Grok Agents Memory: intended experience</text>
+  <text class="subtitle" x="56" y="84">Grok asks first, writes real SQLite state, then agents work from a shared job board instead of vibes.</text>
+
+  <text class="section-label" x="62" y="126">USER STARTUP</text>
+  <rect class="box-blue" x="56" y="144" width="220" height="94"/>
+  <text class="node-title" x="76" y="176">Clone repo</text>
+  <text class="node-text" x="76" y="202">Install once, then run</text>
+  <text class="code" x="76" y="222">start_project.*</text>
+
+  <rect class="box-green" x="320" y="144" width="234" height="94"/>
+  <text class="node-title" x="340" y="176">Launcher preflight</text>
+  <text class="node-text" x="340" y="202">Checks Python, sqlite3,</text>
+  <text class="node-text" x="340" y="222">Grok CLI, MCP health</text>
+
+  <rect class="box-amber" x="598" y="144" width="240" height="94"/>
+  <text class="node-title" x="618" y="176">Grok opens</text>
+  <text class="node-text" x="618" y="202">Agent: project-founder</text>
+  <text class="code" x="618" y="222">/project-kickoff</text>
+
+  <rect class="box-rose" x="882" y="144" width="260" height="94"/>
+  <text class="node-title" x="902" y="176">Short interview</text>
+  <text class="node-text" x="902" y="202">Six questions, then stop</text>
+  <text class="node-text" x="902" y="222">No product files yet</text>
+
+  <path class="arrow" d="M276 191 H320"/>
+  <path class="arrow" d="M554 191 H598"/>
+  <path class="arrow" d="M838 191 H882"/>
+
+  <text class="section-label" x="62" y="292">PERSISTED COORDINATION STATE</text>
+
+  <rect class="box-gray" x="56" y="312" width="286" height="118"/>
+  <text class="node-title" x="76" y="344">Project brief saved</text>
+  <text class="node-text" x="76" y="370">User answers become a</text>
+  <text class="node-text" x="76" y="390">durable project memory</text>
+  <text class="code" x="76" y="414">memory_write(kind=brief)</text>
+
+  <rect class="box-violet" x="56" y="474" width="286" height="118"/>
+  <text class="node-title" x="76" y="506">Initial jobs created</text>
+  <text class="node-text" x="76" y="532">Founder creates scoped jobs</text>
+  <text class="node-text" x="76" y="552">for the selected team</text>
+  <text class="code" x="76" y="576">job_create(...)</text>
+
+  <g transform="translate(416 304)">
+    <path class="db-fill" d="M0 30 C0 12, 250 12, 250 30 L250 242 C250 260, 0 260, 0 242 Z"/>
+    <ellipse class="db" cx="125" cy="30" rx="125" ry="30"/>
+    <path class="db" d="M0 30 L0 242"/>
+    <path class="db" d="M250 30 L250 242"/>
+    <ellipse class="db" cx="125" cy="242" rx="125" ry="30"/>
+    <text class="node-title" x="54" y="88">SQLite MCP</text>
+    <text class="node-text" x="42" y="120">projects</text>
+    <text class="node-text" x="42" y="144">memories</text>
+    <text class="node-text" x="42" y="168">jobs</text>
+    <text class="node-text" x="42" y="192">job_events</text>
+    <text class="node-text" x="42" y="216">job_artifacts</text>
+  </g>
+
+  <path class="arrow" d="M1012 238 C1012 286, 744 280, 666 350"/>
+  <path class="arrow" d="M342 371 H416"/>
+  <path class="arrow" d="M342 533 H416"/>
+
+  <text class="section-label" x="730" y="292">AGENT WORK LOOP</text>
+
+  <rect class="box-blue" x="724" y="312" width="200" height="80"/>
+  <text class="node-title" x="744" y="342">Load context</text>
+  <text class="code" x="744" y="366">context_pack_get</text>
+
+  <rect class="box-green" x="974" y="312" width="170" height="80"/>
+  <text class="node-title" x="994" y="342">Claim job</text>
+  <text class="code" x="994" y="366">job_claim</text>
+
+  <rect class="box-amber" x="724" y="448" width="200" height="92"/>
+  <text class="node-title" x="744" y="478">Work + report</text>
+  <text class="code" x="744" y="502">job_report</text>
+  <text class="code" x="744" y="522">job_append_event</text>
+
+  <rect class="box-rose" x="974" y="448" width="170" height="92"/>
+  <text class="node-title" x="994" y="478">Finish explicitly</text>
+  <text class="code" x="994" y="502">job_complete</text>
+  <text class="code" x="994" y="522">job_block</text>
+
+  <path class="arrow" d="M666 424 C704 404, 704 362, 724 352"/>
+  <path class="arrow" d="M924 352 H974"/>
+  <path class="arrow" d="M1059 392 V448"/>
+  <path class="arrow" d="M974 494 H924"/>
+  <path class="arrow" d="M824 448 V392"/>
+  <path class="arrow-soft" d="M724 494 C690 494, 690 454, 666 454"/>
+  <path class="arrow-soft" d="M1059 540 C1059 638, 542 638, 542 576"/>
+
+  <rect class="box-gray" x="724" y="588" width="420" height="72"/>
+  <text class="node-title" x="744" y="618">Durable facts only</text>
+  <text class="node-text" x="744" y="642">Agents write long-term decisions to memory, not every scratch thought.</text>
+
+  <path class="arrow-soft" d="M934 588 C934 566, 686 566, 666 536"/>
+
+  <rect class="box" x="56" y="628" width="598" height="54"/>
+  <text class="node-title" x="76" y="654">No fake persistence</text>
+  <text class="node-text" x="248" y="654">If a save did not succeed through MCP, the agent must not claim it remembered.</text>
+</svg>

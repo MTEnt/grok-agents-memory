@@ -4,6 +4,8 @@ This workspace wires Grok Build to a real SQLite-backed memory layer through a
 project-scoped MCP server. The same MCP server also contains a real SQLite job
 board so persistent agents know what to read, claim, update, and report back to.
 
+![Grok agents memory and job board flow](assets/grok-agents-flow.svg)
+
 ## What Is Real Here
 
 - MCP server: `mcp/sqlite_memory_server.py`
