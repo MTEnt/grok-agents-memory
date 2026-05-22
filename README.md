@@ -129,3 +129,7 @@ macOS/Linux:
 ```bash
 sh scripts/start_project.sh --check-only
 ```
+
+## License
+
+MIT
