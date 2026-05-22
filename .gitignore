@@ -1,0 +1,4 @@
+.grok/memory/*.sqlite
+.grok/memory/*.sqlite-*
+__pycache__/
+*.pyc

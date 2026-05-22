@@ -1,0 +1,6 @@
+[mcp_servers.agent_memory]
+command = "python"
+args = ["mcp/sqlite_memory_server.py", "--db", ".grok/memory/agent_memory.sqlite"]
+enabled = true
+startup_timeout_sec = 10
+tool_timeout_sec = 30
