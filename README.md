@@ -6,6 +6,10 @@ board so persistent agents know what to read, claim, update, and report back to.
 
 ![Grok agents memory and job board flow](assets/grok-agents-flow.svg)
 
+## User Experience
+
+![User experience flow for Grok agents memory](assets/user-experience-flow.svg)
+
 ## What Is Real Here
 
 - MCP server: `mcp/sqlite_memory_server.py`

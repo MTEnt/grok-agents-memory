@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780" role="img" aria-labelledby="title desc">
+  <title id="title">User experience flow for Grok agents memory</title>
+  <desc id="desc">A storyboard diagram of the user experience: clone the repo, run the launcher, see preflight checks, open Grok, answer the kickoff interview, receive a saved brief and job list, then return later with remembered context.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 700 30px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 16px Arial, sans-serif; fill: #475569; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; rx: 10; }
+      .panel-soft { fill: #f1f5f9; stroke: #cbd5e1; stroke-width: 2; rx: 10; }
+      .terminal { fill: #0f172a; stroke: #334155; stroke-width: 2; rx: 10; }
+      .grok { fill: #eef2ff; stroke: #818cf8; stroke-width: 2; rx: 10; }
+      .user { fill: #ecfdf5; stroke: #34d399; stroke-width: 2; rx: 10; }
+      .saved { fill: #fffbeb; stroke: #f59e0b; stroke-width: 2; rx: 10; }
+      .later { fill: #fdf2f8; stroke: #f472b6; stroke-width: 2; rx: 10; }
+      .label { font: 700 12px Arial, sans-serif; letter-spacing: 1px; fill: #64748b; }
+      .h { font: 700 18px Arial, sans-serif; fill: #0f172a; }
+      .body { font: 14px Arial, sans-serif; fill: #334155; }
+      .small { font: 12px Arial, sans-serif; fill: #475569; }
+      .term { font: 13px Consolas, monospace; fill: #e2e8f0; }
+      .term-dim { font: 13px Consolas, monospace; fill: #94a3b8; }
+      .code { font: 700 13px Consolas, monospace; fill: #1e293b; }
+      .badge { fill: #e0f2fe; stroke: #38bdf8; stroke-width: 1.5; rx: 16; }
+      .badge-text { font: 700 12px Arial, sans-serif; fill: #075985; }
+      .arrow { stroke: #334155; stroke-width: 2.4; fill: none; marker-end: url(#arrow); }
+      .arrow-soft { stroke: #64748b; stroke-width: 2; stroke-dasharray: 6 5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="780"/>
+  <text class="title" x="54" y="52">What the user experience should feel like</text>
+  <text class="subtitle" x="54" y="82">A guided start: run one launcher, answer one short interview, then Grok remembers and coordinates the agent team.</text>
+
+  <rect class="badge" x="54" y="112" width="158" height="32"/>
+  <text class="badge-text" x="76" y="133">FIRST INSTALL</text>
+
+  <rect class="terminal" x="54" y="160" width="330" height="154"/>
+  <text class="label" x="74" y="190" fill="#93c5fd">1. USER TYPES</text>
+  <text class="term" x="74" y="224">git clone &lt;repo-url&gt;</text>
+  <text class="term" x="74" y="248">cd grok-agents-memory</text>
+  <text class="term" x="74" y="272">scripts/start_project.cmd</text>
+  <text class="term-dim" x="74" y="294"># or ./scripts/start_project.ps1</text>
+
+  <rect class="panel" x="432" y="160" width="330" height="154"/>
+  <text class="label" x="452" y="190">2. LAUNCHER CHECKS</text>
+  <text class="h" x="452" y="222">Preflight gives confidence</text>
+  <text class="body" x="452" y="250">Python found, sqlite3 works,</text>
+  <text class="body" x="452" y="272">database exists or is created,</text>
+  <text class="body" x="452" y="294">MCP server handshake passes.</text>
+
+  <rect class="grok" x="810" y="160" width="330" height="154"/>
+  <text class="label" x="830" y="190">3. GROK OPENS</text>
+  <text class="h" x="830" y="222">No build yet</text>
+  <text class="body" x="830" y="250">Grok loads project-founder,</text>
+  <text class="body" x="830" y="272">reads context_pack_get,</text>
+  <text class="body" x="830" y="294">then waits for kickoff.</text>
+
+  <path class="arrow" d="M384 237 H432"/>
+  <path class="arrow" d="M762 237 H810"/>
+
+  <rect class="badge" x="54" y="356" width="172" height="32"/>
+  <text class="badge-text" x="76" y="377">FIRST CONVERSATION</text>
+
+  <rect class="grok" x="54" y="408" width="330" height="196"/>
+  <text class="label" x="74" y="438">4. GROK ASKS FIRST</text>
+  <text class="h" x="74" y="470">Six-question interview</text>
+  <text class="body" x="74" y="498">What are we building?</text>
+  <text class="body" x="74" y="520">Who is it for?</text>
+  <text class="body" x="74" y="542">First usable workflow?</text>
+  <text class="body" x="74" y="564">Stack, feel, team size?</text>
+  <text class="code" x="74" y="590">No product files before answers.</text>
+
+  <rect class="user" x="432" y="408" width="330" height="196"/>
+  <text class="label" x="452" y="438">5. USER ANSWERS</text>
+  <text class="h" x="452" y="470">Short answers are enough</text>
+  <text class="body" x="452" y="498">Example:</text>
+  <text class="body" x="452" y="522">Tiny task tracker, web app,</text>
+  <text class="body" x="452" y="544">React/Vite, local SQLite,</text>
+  <text class="body" x="452" y="566">standard team.</text>
+  <text class="small" x="452" y="590">The user stays in control of scope.</text>
+
+  <rect class="saved" x="810" y="408" width="330" height="196"/>
+  <text class="label" x="830" y="438">6. GROK CONFIRMS</text>
+  <text class="h" x="830" y="470">Saved, not hand-waved</text>
+  <text class="body" x="830" y="498">Project brief memory id</text>
+  <text class="body" x="830" y="520">Project record updated</text>
+  <text class="body" x="830" y="542">Initial job ids created</text>
+  <text class="body" x="830" y="564">Founder handoff recorded</text>
+  <text class="code" x="830" y="590">SQLite is the receipt.</text>
+
+  <path class="arrow" d="M384 506 H432"/>
+  <path class="arrow" d="M762 506 H810"/>
+
+  <rect class="panel-soft" x="54" y="648" width="506" height="92"/>
+  <text class="label" x="74" y="678">WHAT THE USER SEES NEXT</text>
+  <text class="h" x="74" y="708">A clear queue instead of mystery work</text>
+  <text class="body" x="74" y="732">Product lead, architect, implementer, and reviewer each get a real job id and context.</text>
+
+  <rect class="later" x="634" y="648" width="506" height="92"/>
+  <text class="label" x="654" y="678">RETURNING LATER</text>
+  <text class="h" x="654" y="708">Grok resumes with context</text>
+  <text class="body" x="654" y="732">Agents load the brief, open jobs, previous events, and durable decisions before acting.</text>
+
+  <path class="arrow-soft" d="M975 604 C975 630, 962 636, 942 648"/>
+  <path class="arrow-soft" d="M219 604 C219 630, 240 636, 272 648"/>
+
+  <path class="arrow-soft" d="M975 314 C1010 352, 1010 374, 975 408"/>
+  <path class="arrow-soft" d="M219 314 C184 352, 184 374, 219 408"/>
+</svg>
